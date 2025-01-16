@@ -25,7 +25,12 @@ html {
 body {
   min-height: 100vh;
   color: var(--color-light);
-  background-color: var(--color-darkest);
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.2)
+    ),
+    linear-gradient(180deg, #1b1833 -0.87%, #131010 57.85%);
   padding: 3.2rem;
 }
 
@@ -328,7 +333,7 @@ progress {
   border-radius: 1rem;
 }
 .btn-ui img {
-  width: 8rem;
+  width: 10rem;
 }
 .react {
   animation: effect-logo 3s infinite linear;
