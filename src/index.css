@@ -37,7 +37,7 @@ body {
 }
 
 .main {
-  width: 50rem;
+  width: 75rem;
 }
 
 .app-header {
@@ -73,17 +73,20 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
+  margin: 2rem auto;
 }
 
 h2 {
   font-size: 3.4rem;
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 h3 {
   font-size: 2.4rem;
   font-weight: 600;
   margin-bottom: 4rem;
+  text-align: center;
 }
 
 h4 {
@@ -189,6 +192,9 @@ progress {
   font-size: 2rem;
   font-weight: 500;
   margin-bottom: 1.6rem;
+  width: 55%;
+  display: block;
+  margin: 4rem auto;
 }
 
 .result span {
@@ -214,12 +220,37 @@ progress {
 }
 
 .timer {
-  float: left;
-  font-size: 1.8rem;
+  font-size: 5rem;
   color: var(--color-medium);
-  border: 2px solid var(--color-dark);
-  padding: 1.35rem 2.8rem;
-  border-radius: 100px;
+  font-weight: 700;
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.2)
+    ),
+    linear-gradient(98.94deg, #578e7e 0.87%, #fbf5dd 57.85%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.timer.worning {
+  background: none;
+  color: red;
+  -webkit-text-fill-color: inherit;
+  animation: effect-worning 1s infinite cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+@keyframes effect-worning {
+  100% {
+    transform: scale(1.2);
+  }
+}
+.react {
+  animation: effect-logo 3s infinite linear;
+}
+@keyframes effect-logo {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* CREDIT: https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
@@ -279,6 +310,16 @@ progress {
   float: right;
 }
 
+.btn-reset {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rem;
+  width: 30%;
+  display: block;
+  margin: 0 auto;
+}
 .btn-ui {
   padding: 2rem 0;
   display: flex;
@@ -299,7 +340,7 @@ progress {
 }
 
 .app-header {
-  max-width: 55rem;
+  max-width: 80rem;
   margin-bottom: 4rem;
   display: flex;
   align-items: center;

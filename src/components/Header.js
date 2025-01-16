@@ -1,6 +1,6 @@
 import Timer from "./Timer";
 
-function Header({ myImages, indexOfImage }) {
+function Header({ myImages, indexOfImage, dispatch, secondsRemaining }) {
   return (
     <div className="header">
       <header className="app-header">
@@ -9,7 +9,7 @@ function Header({ myImages, indexOfImage }) {
           src={myImages[indexOfImage]}
           alt="react logo"
         />
-        <Timer />
+        <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
       </header>
     </div>
   );

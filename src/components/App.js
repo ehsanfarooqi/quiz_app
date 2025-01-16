@@ -15,6 +15,9 @@ import Header from "./Header";
 import Question from "./Question";
 import Progress from "./Progress";
 import NexButton from "./NexButton";
+import Footer from "./Footer";
+import Exit from "./Exit";
+import FinishedScreen from "./FinishedScreen";
 
 const myImages = [logo, javaScript, html, python, cPlus, java];
 
@@ -25,7 +28,10 @@ const initialState = {
   index: 0,
   answer: null,
   points: 0,
+  secondsRemaining: 0,
 };
+
+const SECOND_PER_QUESTION = 1;
 
 function reducer(state, { type, payloads }) {
   switch (type) {
@@ -47,6 +53,7 @@ function reducer(state, { type, payloads }) {
         questions: newQuestions,
         status: "active",
         indexOfImage: payloads,
+        secondsRemaining: newQuestions.length * SECOND_PER_QUESTION,
       };
     case "newAnswer":
       const curQuestion = state.questions[state.index];
@@ -64,18 +71,47 @@ function reducer(state, { type, payloads }) {
         index: state.index + 1,
         answer: null,
       };
+    case "exit":
+      return initialState;
+
+    case "finished":
+      return {
+        ...state,
+        status: "finished",
+      };
+    case "tick":
+      if (!state.secondsRemaining) {
+        return {
+          ...state,
+          status: "finished",
+        };
+      }
+      return {
+        ...state,
+        secondsRemaining: state.secondsRemaining - 1,
+      };
     default:
       throw new Error("Action unkonwn");
   }
 }
 
 export default function App() {
-  const [{ questions, status, indexOfImage, index, answer, points }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    {
+      questions,
+      status,
+      indexOfImage,
+      index,
+      answer,
+      points,
+      secondsRemaining,
+    },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   const numQuestions = questions.length;
-  const sumQuestions = questions.reduce((acc, cur) => acc + cur.points, 0);
-  console.log(sumQuestions);
+  const maxPossiblePoints = questions.reduce((acc, cur) => acc + cur.points, 0);
+
   return (
     <div className="app">
       <Main>
@@ -87,11 +123,16 @@ export default function App() {
         )}
         {status === "active" && (
           <>
-            <Header myImages={myImages} indexOfImage={indexOfImage} />
+            <Header
+              myImages={myImages}
+              indexOfImage={indexOfImage}
+              dispatch={dispatch}
+              secondsRemaining={secondsRemaining}
+            />
             <Progress
               numQuestions={numQuestions}
               points={points}
-              sumQuestions={sumQuestions}
+              maxPossiblePoints={maxPossiblePoints}
               index={index}
               answer={answer}
             />
@@ -100,8 +141,23 @@ export default function App() {
               dispatch={dispatch}
               answer={answer}
             />
-            <NexButton dispatch={dispatch} />
+            <Footer>
+              <NexButton
+                dispatch={dispatch}
+                answer={answer}
+                index={index}
+                numQuestions={numQuestions}
+              />
+              <Exit dispatch={dispatch} />
+            </Footer>
           </>
+        )}
+        {status === "finished" && (
+          <FinishedScreen
+            points={points}
+            maxPossiblePoints={maxPossiblePoints}
+            dispatch={dispatch}
+          />
         )}
       </Main>
     </div>
