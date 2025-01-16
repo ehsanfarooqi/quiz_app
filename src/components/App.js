@@ -31,7 +31,7 @@ const initialState = {
   secondsRemaining: 0,
 };
 
-const SECOND_PER_QUESTION = 1;
+const SECOND_PER_QUESTION = 30;
 
 function reducer(state, { type, payloads }) {
   switch (type) {
