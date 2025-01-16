@@ -9,6 +9,12 @@ import python from "../images/python.png";
 import cPlus from "../images/cplus.png";
 import java from "../images/java.png";
 
+// import all sounds of my app
+import answerSoundUrl from "../sounds/correct-sound.mp3";
+import wrongSoundUrl from "../sounds/wrong-sound.wav";
+import worningSound from "../sounds/warningClock.wav";
+
+// import all Components of my app
 import Main from "./Main";
 import StartScreen from "./StartScreen";
 import Header from "./Header";
@@ -19,7 +25,13 @@ import Footer from "./Footer";
 import Exit from "./Exit";
 import FinishedScreen from "./FinishedScreen";
 
+// Images array
 const myImages = [logo, javaScript, html, python, cPlus, java];
+
+// create new Audio
+const worning = new Audio(worningSound);
+const correctSound = new Audio(answerSoundUrl);
+const wrongSound = new Audio(wrongSoundUrl);
 
 const initialState = {
   questions: [],
@@ -33,6 +45,7 @@ const initialState = {
 
 const SECOND_PER_QUESTION = 30;
 
+// Reducer function
 function reducer(state, { type, payloads }) {
   switch (type) {
     case "start":
@@ -57,13 +70,13 @@ function reducer(state, { type, payloads }) {
       };
     case "newAnswer":
       const curQuestion = state.questions[state.index];
+      const isCorrect = payloads === curQuestion.correctOption;
+      if (isCorrect) correctSound.play();
+      else wrongSound.play();
       return {
         ...state,
         answer: payloads,
-        points:
-          payloads === curQuestion.correctOption
-            ? state.points + curQuestion.points
-            : state.points,
+        points: isCorrect ? state.points + curQuestion.points : state.points,
       };
     case "nextQuestion":
       return {
@@ -72,7 +85,8 @@ function reducer(state, { type, payloads }) {
         answer: null,
       };
     case "exit":
-      return initialState;
+      worning.pause();
+      return { ...initialState };
 
     case "finished":
       return {
@@ -80,6 +94,7 @@ function reducer(state, { type, payloads }) {
         status: "finished",
       };
     case "tick":
+      if (state.secondsRemaining < 9) worning.play();
       if (!state.secondsRemaining) {
         return {
           ...state,
