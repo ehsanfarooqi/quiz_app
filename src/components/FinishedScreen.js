@@ -10,9 +10,9 @@ function FinishedScreen({ points, maxPossiblePoints, dispatch }) {
   return (
     <div>
       <h1>
-        <span>🎉</span>Congergelations<span>🎉</span>
+        <span>🎉</span>Congratulations<span>🎉</span>
       </h1>
-      <h2>You have succesfilly the quiz finished</h2>
+      <h2>You have successfully completed the quiz!</h2>
       <p className="result">
         <span>{emoji}</span> Your Scored {points} out of {maxPossiblePoints} (
         {percentage}%)
