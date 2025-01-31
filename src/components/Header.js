@@ -1,6 +1,8 @@
+import { useQuiz } from "../context/QuizContext";
 import Timer from "./Timer";
 
-function Header({ myImages, indexOfImage, dispatch, secondsRemaining }) {
+function Header() {
+  const { myImages, indexOfImage, dispatch, secondsRemaining } = useQuiz();
   return (
     <div className="header">
       <header className="app-header">
